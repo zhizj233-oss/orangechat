@@ -21,3 +21,5 @@ dist/
 *.class
 *.jar
 !gradle-wrapper.jar
+agconnect-services.json
+.vscode/

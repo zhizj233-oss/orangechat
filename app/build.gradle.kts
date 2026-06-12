@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.huawei.agconnect)
 }
 
 android {
@@ -180,6 +181,10 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.config)
+
+    // Huawei Push Kit (HMS) + AppGallery Connect core
+    implementation(libs.huawei.agconnect.core)
+    implementation(libs.huawei.push)
 
     // DataStore
     implementation(libs.androidx.datastore.preferences)

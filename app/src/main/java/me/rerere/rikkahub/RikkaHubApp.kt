@@ -34,6 +34,8 @@ import me.rerere.rikkahub.data.datastore.SettingsStore
 import me.rerere.rikkahub.data.service.DailySummaryService
 import me.rerere.rikkahub.data.service.ProactiveMessageService
 import me.rerere.rikkahub.data.service.SupabaseSyncService
+import me.rerere.rikkahub.push.NotificationHelper
+import me.rerere.rikkahub.push.PushTokenManager
 import me.rerere.rikkahub.service.WebServerService
 import me.rerere.rikkahub.utils.CrashHandler
 import me.rerere.rikkahub.utils.DatabaseUtil
@@ -107,7 +109,25 @@ class RikkaHubApp : Application() {
         // Increment launch count
         incrementLaunchCount()
 
+        // Init Huawei Push Kit (create channel & try to fetch token)
+        initHuaweiPush()
+
         // Composer.setDiagnosticStackTraceMode(ComposeStackTraceMode.Auto)
+    }
+
+    private fun initHuaweiPush() {
+        runCatching {
+            // 创建主动消息通知渠道（不弹权限，仅注册渠道）
+            get<NotificationHelper>().ensureChannel()
+
+            val pushTokenManager = get<PushTokenManager>()
+            // 尝试主动获取 token（异步，不阻塞主线程；失败仅记录日志）
+            pushTokenManager.fetchToken()
+            // 若已有 token 但上次上报失败，则重试
+            pushTokenManager.retryUploadIfNeeded()
+        }.onFailure {
+            Log.e(TAG, "initHuaweiPush failed", it)
+        }
     }
 
     private fun incrementLaunchCount() {

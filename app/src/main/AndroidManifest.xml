@@ -228,6 +228,15 @@
         android:value="background music playback" />
     </service>
 
+    <!-- Huawei Push Kit (HMS) message service: receives push token & data messages -->
+    <service
+      android:name=".push.HuaweiPushMessageService"
+      android:exported="false">
+      <intent-filter>
+        <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
+      </intent-filter>
+    </service>
+
     <provider
       android:name="androidx.core.content.FileProvider"
       android:authorities="${applicationId}.fileprovider"

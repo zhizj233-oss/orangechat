@@ -10,6 +10,8 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven("https://repo.itextsupport.com/android")
+        // Huawei AppGallery Connect / HMS Core (for agcp plugin & Push Kit)
+        maven("https://developer.huawei.com/repo/")
     }
     resolutionStrategy {
         eachPlugin {
@@ -28,6 +30,8 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven("https://jitpack.io")
+        // Huawei AppGallery Connect / HMS Core (for agconnect-core & Push Kit SDK)
+        maven("https://developer.huawei.com/repo/")
         mavenLocal()
     }
 }
